@@ -12,6 +12,7 @@ import { EducationSection } from './components/education/EducationSection';
 import { ProfilePage } from './components/profile/ProfilePage';
 import { BlockchainViewer } from './components/blockchain/BlockchainViewer';
 import { AdminDashboard } from './components/admin/AdminDashboard';
+import { SmartMatch } from './components/matching/SmartMatch';
 
 function App() {
   const { user, loading } = useAuth();
@@ -59,6 +60,8 @@ function App() {
         return <BlockchainViewer />;
       case 'admin':
         return <AdminDashboard />;
+      case 'smart-match':
+        return <SmartMatch />;
       case 'profile':
         return <ProfilePage />;
       default:
@@ -68,8 +71,16 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-rose-600 text-white px-4 py-2 rounded-lg z-50 font-semibold"
+      >
+        Skip to main content
+      </a>
       <Navbar currentView={currentView} onNavigate={setCurrentView} />
-      <main>{renderView()}</main>
+      <main id="main-content" role="main" tabIndex={-1}>
+        {renderView()}
+      </main>
     </div>
   );
 }

@@ -5,14 +5,22 @@ import { Database } from '../../lib/database.types';
 import { Package, MapPin, Calendar, Filter } from 'lucide-react';
 import { BlockchainManager } from '../../services/blockchainManager';
 import { BlockchainService } from '../../services/blockchain';
+import { Toast } from '../common/Toast';
 
 type Donation = Database['public']['Tables']['donations']['Row'];
+
+interface ToastState {
+  show: boolean;
+  type: 'success' | 'error' | 'info';
+  message: string;
+}
 
 export function DonationsList() {
   const { user, profile } = useAuth();
   const [donations, setDonations] = useState<Donation[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
+  const [toast, setToast] = useState<ToastState>({ show: false, type: 'info', message: '' });
 
   const loadDonations = async () => {
     try {
@@ -74,9 +82,17 @@ export function DonationsList() {
       });
 
       loadDonations();
-      alert('Donation reserved successfully and recorded on blockchain!');
+      setToast({
+        show: true,
+        type: 'success',
+        message: 'Donation reserved successfully and recorded on blockchain!',
+      });
     } catch (error: any) {
-      alert('Failed to reserve donation: ' + error.message);
+      setToast({
+        show: true,
+        type: 'error',
+        message: 'Failed to reserve donation: ' + error.message,
+      });
     }
   };
 
@@ -172,6 +188,14 @@ export function DonationsList() {
             </div>
           ))}
         </div>
+      )}
+
+      {toast.show && (
+        <Toast
+          type={toast.type}
+          message={toast.message}
+          onClose={() => setToast({ ...toast, show: false })}
+        />
       )}
     </div>
   );

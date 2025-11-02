@@ -52,22 +52,28 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              onClick={feature.action}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 cursor-pointer transform hover:-translate-y-2"
-            >
-              <div className={`bg-${feature.color}-100 w-16 h-16 rounded-2xl flex items-center justify-center mb-6`}>
-                <feature.icon className={`w-8 h-8 text-${feature.color}-600`} />
+          {features.map((feature, index) => {
+            const bgColorClass = feature.color === 'rose' ? 'bg-rose-100' : feature.color === 'pink' ? 'bg-pink-100' : 'bg-red-100';
+            const textColorClass = feature.color === 'rose' ? 'text-rose-600' : feature.color === 'pink' ? 'text-pink-600' : 'text-red-600';
+            const hoverColorClass = feature.color === 'rose' ? 'hover:text-rose-700' : feature.color === 'pink' ? 'hover:text-pink-700' : 'hover:text-red-700';
+
+            return (
+              <div
+                key={feature.title}
+                onClick={feature.action}
+                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 cursor-pointer transform hover:-translate-y-2"
+              >
+                <div className={`${bgColorClass} w-16 h-16 rounded-2xl flex items-center justify-center mb-6`}>
+                  <feature.icon className={`w-8 h-8 ${textColorClass}`} />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-3">{feature.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                <button className={`mt-6 ${textColorClass} font-semibold ${hoverColorClass} transition`}>
+                  Learn More →
+                </button>
               </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">{feature.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-              <button className={`mt-6 text-${feature.color}-600 font-semibold hover:text-${feature.color}-700 transition`}>
-                Learn More →
-              </button>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="bg-white rounded-3xl shadow-xl p-12 mb-16">

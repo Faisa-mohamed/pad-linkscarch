@@ -23,6 +23,7 @@ export function Navbar({ currentView, onNavigate }: NavbarProps) {
     { id: 'home', label: 'Home', show: true },
     { id: 'donations', label: 'Donations', show: true },
     { id: 'requests', label: 'Requests', show: true },
+    { id: 'smart-match', label: 'Smart Match', show: true },
     { id: 'blockchain', label: 'Blockchain', show: true },
     { id: 'education', label: 'Learn', show: true },
     { id: 'admin', label: 'Admin', show: profile?.user_type === 'admin' },
